@@ -1,0 +1,13 @@
+package eclipse_ex1;
+import java.io.*;
+
+public class Main {
+
+	public static void main(String[] args) {
+		String path = "/eclipse_workspace/eclipse_ex1/src/eclipse_ex1/data.dat";
+		InputStream in = new FileInputStream(path);
+		System.out.println(in.read());
+
+	}
+
+}

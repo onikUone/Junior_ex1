@@ -1,0 +1,45 @@
+・ストリーム
+    バイナリデータで入出力できる概念。
+
+    入力ストリーム:java.io.InputStream
+    出力ストリーム:java.io.OutputStream
+
+    文字入力:java.io.Reader
+    文字出力:java.io.Writer
+
+・入力
+    InputStream in = new FileInputStream("ファイル名");
+    InputStream in = System.in;    //標準入力
+
+    in.read();    //バイナリデータreturn
+    Reader r = new InputStreamReader(in);
+    r.read();    //文字データ(String型)
+
+・入力シーン例(1列ずつ読み込み)
+    main(){
+        String path = "";
+        BufferedReader in = new BufferedReader(new FileReader(path));
+        String line;
+        while( (line = in.readLine()) != null){
+            System.out.println(line);
+        }
+        in.close(); //必ずcloseすること
+
+    }
+
+・splitメソッド
+    String型クラスのメソッド
+    .split("正規表現パターン",スプリットする回数);
+
+・リスト
+    import java.util.*;
+
+    List<String> list = new ArrayList<String>();
+    list.add();
+    list.size();
+
+・二次元配列
+    int[][] a = new int[4][5];
+ 
+・キャスト関係
+    double d = Double.parseDouble(str);

@@ -1,0 +1,22 @@
+package eclipse_ex1;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+
+public class Main {
+
+	public static void main(String[] args) throws IOException {
+		double[] x;
+
+		//ファイル読み込み
+
+		String path = "/Users/Uone/IDrive/OPU/研究フォルダ/1_プログラミング課題/eclipse_workspace/eclipse_ex1/src/eclipse_ex1/data.dat";
+		BufferedReader in = new BufferedReader(new FileReader(path));
+		String line;
+		while((line = in.readLine()) != null){
+
+		}
+		in.close();
+	}
+
+}

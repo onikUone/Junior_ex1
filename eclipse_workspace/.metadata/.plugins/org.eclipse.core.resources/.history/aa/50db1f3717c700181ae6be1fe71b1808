@@ -1,0 +1,16 @@
+package eclipse_ex1;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+
+public class Main {
+
+	public static void main(String[] args) throws IOException {
+		String path = "/eclipse_workspace/eclipse_ex1/src/eclipse_ex1/data.dat";
+		InputStream in = new FileInputStream(path);
+		System.out.println(in.read());
+		in.close();
+	}
+
+}
