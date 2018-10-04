@@ -91,9 +91,7 @@ public class Main {
 
 		System.out.println(out.weight[0]);
 		//学習1周
-		for(int i=0; i< 300; i++){
-			train(x, y, inter, out);
-		}
+
 		System.out.println(out.weight[0]);
 	}
 }

@@ -14,9 +14,6 @@ public class OutputNeuron {
 
 
 	//member method
-	public double[] getWeight(){
-		return weight;
-	}
 	public void clearNet(){
 		net = 0;
 	}

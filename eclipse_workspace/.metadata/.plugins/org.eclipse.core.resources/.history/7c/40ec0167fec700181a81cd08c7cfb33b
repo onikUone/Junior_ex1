@@ -47,25 +47,6 @@ public class Main {
 //		System.out.println(out.output());
 	}
 
-	public static void train(double x[], double y[], InterNeuron inter[], OutputNeuron out){
-		for(int i=0; i<x.length; i++){
-			//順方向計算
-			double o_fromOutput;	//計算量退避用
-			double o_fromInter[] = new double[inter.length];	//計算量退避用
-			forward(x, inter, out);
-			for(int j=0; j<inter.length; j++){
-				o_fromInter[j] = inter[j].output();
-			}
-			o_fromOutput = out.output();
-
-			//バックプロパゲーション
-			out.reWeight(y[i], o_fromOutput, o_fromInter);
-			for(int j=0; j<inter.length; j++){
-				inter[j].reWeight(x[i], y[i], o_fromInter[j], o_fromOutput, out);
-			}
-		}
-	}
-
 	public static void main(String[] args) throws IOException {
 		//ファイル読み込み
 		double[][] inputFile;	//datファイル ２次元配列化
@@ -82,18 +63,29 @@ public class Main {
 		}
 		System.out.println("main");
 
-		//ニューロンオブジェクト
+		//ニューロン実装
 		InterNeuron inter[] = new InterNeuron[20];	//中間層ニューロンの個数はここで指定する
 		for(int i=0; i<inter.length; i++){
 			inter[i] = new InterNeuron(1);
 		}
 		OutputNeuron out = new OutputNeuron(inter.length);	//inter.lengthで中間層ニューロンの個数指定し、その数だけ結合強度を用意する。
 
-		System.out.println(out.weight[0]);
-		//学習1周
-		for(int i=0; i< 300; i++){
-			train(x, y, inter, out);
+		//順方向計算
+		double o_fromOutput;
+		double o_fromInter[] = new double[inter.length];
+		forward(x, inter, out);
+		for(int i=0; i<inter.length; i++){
+			o_fromInter[i] = inter[i].output();
 		}
-		System.out.println(out.weight[0]);
+		o_fromOutput = out.output();
+
+		System.out.println(inter[0].weight[0]);
+		out.reWeight(y[0], o_fromOutput, o_fromInter);
+		inter[0].reWeight(x[0], y[0], o_fromInter, o_fromOutput, out);
+
+
+
+
 	}
+
 }
