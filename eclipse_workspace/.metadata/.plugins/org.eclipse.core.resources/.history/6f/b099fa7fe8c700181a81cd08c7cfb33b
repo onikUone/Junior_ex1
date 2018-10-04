@@ -1,0 +1,67 @@
+package eclipse_ex1;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+public class Main {
+
+	public static double[][] inputFile(String path) throws IOException{
+		List<String[]> list = new ArrayList<String[]>();
+		BufferedReader in = new BufferedReader(new FileReader(path));
+		String line;
+		while((line = in.readLine()) != null){
+//			System.out.println(line);	//一行ずつprintできる
+			list.add(line.split("\t"));
+		}
+		in.close();
+		double[][] x = new double[list.size()][list.get(0).length];
+		for(int i=0; i<list.size(); i++){
+			x[i][0] = Double.parseDouble(list.get(i)[0]);
+			x[i][1] = Double.parseDouble(list.get(i)[1]);
+		}
+
+		for(int i=0; i<x.length; i++){
+			for(int j=0; j<x[i].length; j++){
+				System.out.println(x[i][j]);
+			}
+		}
+
+		return x;
+	}
+
+	public static void main(String[] args) throws IOException {
+		//ファイル読み込み
+		double[][] inputFile;	//datファイル ２次元配列化
+		String path = "/Users/Uone/IDrive/OPU/研究フォルダ/1_プログラミング課題/eclipse_workspace/eclipse_ex1/src/eclipse_ex1/inputData.dat";	//Mac(ノートPC)環境
+//		String path = "C:\\Users\\Yuichi Omozaki\\IDrive\\Junior_ex1\\eclipse_workspace\\eclipse_ex1\\src\\eclipse_ex1/inputData.dat";	//Windows(研究室環境)
+		inputFile = inputFile(path);
+
+		//教師データ作成
+		double[] x = new double[inputFile.length];	//入力ベクトル_教師データ
+		double[] y = new double[inputFile.length];	//出力ベクトル_教師データ
+		for(int i=0; i<inputFile.length; i++){
+			x[i] = inputFile[i][0];
+			y[i] = inputFile[i][1];
+		}
+		System.out.println("main");
+		for(int i=0; i<x.length; i++) {
+			System.out.println("x[" + i + "] = " + x[i]);
+			System.out.println("y[" + i + "] = " + y[i]);
+		}
+
+		//ニューロン実装
+//		InterNeuron inter[] = new InterNeuron[2];
+//		for(int i=0; i<inter.length; i++){
+//			inter[i] = new InterNeuron();
+//		}
+		int[] a;
+		a = new int[2];
+		a[0]=10;
+		a[1]=11;
+		System.out.println(a[0]);
+
+	}
+
+}

@@ -1,0 +1,36 @@
+package eclipse_ex1;
+
+public class InterNeuron {
+	//member field
+	double[] weight;
+	double threshoud;
+	double net = 0;
+
+	//member method
+	public void setNet(double o_fromInput){
+		net += weight[0] * o_fromInput;
+	}
+
+	public double output(double input[]) {
+		double net = 0;
+		for(int i=0; i<3; i++) {
+			net += weight[i] * input[i];
+		}
+		net += threshoud;
+		return sigmoid(net);
+	}
+
+	public static double sigmoid(double net) {
+		return 1 / (1 + Math.exp((-1) * net));
+	}
+
+	//constructor
+	//引数に入力層の個数を指定すると、その個数だけの次元で結合強度配列を作成する。
+	InterNeuron(int inputNumber) {
+		weight = new double[inputNumber];
+		for(int i=0; i<inputNumber; i++){
+			weight[i] = 0.5;
+		}
+		threshoud = 0.5;
+	}
+}

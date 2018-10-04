@@ -2,20 +2,21 @@ package eclipse_ex1;
 
 public class OutputNeuron {
 	//member field
-	double weight[], threshoud;
+	double[] weight;
+	double threshoud;
+	double net = 0;
 
 	//member method
-	public void setValue(double w[], double t) {
-		weight = w;	//結合強度
-		threshoud = t;	//しきい値
+	public void clearNet(){
+		net = 0;
 	}
-
-	public double output(double input[]) {
-		double net = 0;
-		for(int i=0; i<3; i++) {
-			net += weight[i] * input[i];
-		}
+	public void setNet(double o_fromInter, int interNumber){
+		net += weight[interNumber] * o_fromInter;
+	}
+	public void calcNet(){
 		net += threshoud;
+	}
+	public double output(){
 		return sigmoid(net);
 	}
 
@@ -24,7 +25,11 @@ public class OutputNeuron {
 	}
 
 	//constructor
-	OutputNeuron(){
-
+	OutputNeuron(int interNumber){
+		weight = new double[interNumber];
+		for(int i=0; i<interNumber; i++){
+			weight[i] = 0.5;
+		}
+		threshoud = 0.5;
 	}
 }
