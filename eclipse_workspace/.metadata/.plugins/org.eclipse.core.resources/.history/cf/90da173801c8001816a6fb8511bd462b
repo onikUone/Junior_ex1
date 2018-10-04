@@ -12,6 +12,7 @@ public class OutputNeuron {
 	double[] delta_W;
 	double delta_T;
 
+
 	//member method
 	public double[] getWeight(){
 		return weight;

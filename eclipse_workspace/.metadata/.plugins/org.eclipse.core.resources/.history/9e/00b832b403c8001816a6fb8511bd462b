@@ -92,9 +92,12 @@ public class Main {
 		}
 		OutputNeuron out = new OutputNeuron(inter.length);	//inter.lengthで中間層ニューロンの個数指定し、その数だけ結合強度を用意する。
 
+		System.out.println(out.weight[0]);
+		//学習1周
 		for(int i=0; i< 1000; i++){	//ここで学習回数を指定できる
 			train(x, y, inter, out);
 		}
-		forward(0.8, inter, out, 1);	//学習済の計算機でテストデータ入力による出力検証
+		forward(0.9, inter, out, 1);
+//		System.out.println(out.weight[0]);
 	}
 }

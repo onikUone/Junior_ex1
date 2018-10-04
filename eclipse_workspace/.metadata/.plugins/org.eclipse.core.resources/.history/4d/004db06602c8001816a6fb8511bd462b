@@ -29,7 +29,7 @@ public class Main {
 		return x;
 	}
 
-	public static void forward(double x, InterNeuron inter[], OutputNeuron out, int flg){	//flg 出力層の出力表示フラグ
+	public static void forward(double x, InterNeuron inter[], OutputNeuron out){
 		for(int i=0; i<inter.length; i++){
 			inter[i].clearNet();
 		}
@@ -44,9 +44,7 @@ public class Main {
 			out.setNet(inter[i].output(), i);
 		}
 		out.calcNet();
-		if(flg == 1){
-			System.out.println(out.output());
-		}
+//		System.out.println(out.output());
 	}
 
 	public static void train(double x[], double y[], InterNeuron inter[], OutputNeuron out){
@@ -54,8 +52,7 @@ public class Main {
 			//順方向計算
 			double o_fromOutput;	//計算量退避用
 			double o_fromInter[] = new double[inter.length];	//計算量退避用
-			//順方向1周
-			forward(x[i], inter, out, 0);
+			forward(x, inter, out);
 			for(int j=0; j<inter.length; j++){
 				o_fromInter[j] = inter[j].output();
 			}
@@ -92,9 +89,11 @@ public class Main {
 		}
 		OutputNeuron out = new OutputNeuron(inter.length);	//inter.lengthで中間層ニューロンの個数指定し、その数だけ結合強度を用意する。
 
-		for(int i=0; i< 1000; i++){	//ここで学習回数を指定できる
+		System.out.println(out.weight[0]);
+		//学習1周
+		for(int i=0; i< 300; i++){	//ここで学習回数を指定できる
 			train(x, y, inter, out);
 		}
-		forward(0.8, inter, out, 1);	//学習済の計算機でテストデータ入力による出力検証
+		System.out.println(out.weight[0]);
 	}
 }
