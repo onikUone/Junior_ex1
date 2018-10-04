@@ -44,7 +44,7 @@ public class Main {
 			out.setNet(inter[i].output(), i);
 		}
 		out.calcNet();
-//		System.out.println(out.output());
+		System.out.println(out.output());
 	}
 
 	public static void main(String[] args) throws IOException {
@@ -78,7 +78,6 @@ public class Main {
 			o_fromInter[i] = inter[i].output();
 		}
 		o_fromOutput = out.output();
-
 
 
 

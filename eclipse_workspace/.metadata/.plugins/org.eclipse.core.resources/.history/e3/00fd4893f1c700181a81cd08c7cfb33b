@@ -71,16 +71,7 @@ public class Main {
 		OutputNeuron out = new OutputNeuron(inter.length);	//inter.lengthで中間層ニューロンの個数指定し、その数だけ結合強度を用意する。
 
 		//順方向計算
-		double o_fromOutput;
-		double o_fromInter[] = new double[inter.length];
 		forward(x, inter, out);
-		for(int i=0; i<inter.length; i++){
-			o_fromInter[i] = inter[i].output();
-		}
-		o_fromOutput = out.output();
-
-
-
 
 
 	}

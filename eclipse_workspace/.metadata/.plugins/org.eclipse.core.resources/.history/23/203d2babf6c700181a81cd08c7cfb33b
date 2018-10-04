@@ -11,6 +11,7 @@ public class OutputNeuron {
 	double alpha;
 	double[] delta_W;
 	double delta_T;
+	int flg;
 
 
 	//member method
@@ -31,18 +32,23 @@ public class OutputNeuron {
 	}
 
 	public void reWeight(double y, double o_fromOutput, double o_fromInter[]){
-		for(int i=0; i<weight.length; i++){
-			delta_W[i] *= alpha;
-			delta_W[i] += eta * (y - o_fromOutput) * o_fromOutput * (1 - o_fromOutput) * o_fromInter[i];
-			weight[i] += delta_W[i];	//重み更新式
+		if(flg == 0){
+			for(int i=0; i<weight.length; i++){
+				delta_W[i] = eta * (y - o_fromOutput) * o_fromOutput * (1 - o_fromOutput) * o_fromInter[i];
+			}
+			delta_T = eta * (y - o_fromOutput) * o_fromOutput * (1 - o_fromOutput);
+			flg = 1;
 		}
-		delta_T *= alpha;
-		delta_T += eta * (y - o_fromOutput) * o_fromOutput * (1 - o_fromOutput);
-		threshoud += delta_T;	//しきい値更新式
+		else{
+			for(int i=0; i<weight.length; i++){
+				delta_W[i] = eta *
+			}
+		}
 	}
 
 	//constructor
 	OutputNeuron(int interNumber){
+		flg = 0;
 		weight = new double[interNumber];
 		for(int i=0; i<interNumber; i++){
 			weight[i] = 0.5;
@@ -52,6 +58,5 @@ public class OutputNeuron {
 		alpha = 0.9;
 		delta_W = new double[weight.length];
 		Arrays.fill(delta_W, 0);
-		delta_T = 0;
 	}
 }

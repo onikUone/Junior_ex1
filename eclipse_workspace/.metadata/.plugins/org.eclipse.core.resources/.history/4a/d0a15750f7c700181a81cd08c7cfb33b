@@ -38,7 +38,7 @@ public class OutputNeuron {
 		}
 		delta_T *= alpha;
 		delta_T += eta * (y - o_fromOutput) * o_fromOutput * (1 - o_fromOutput);
-		threshoud += delta_T;	//しきい値更新式
+
 	}
 
 	//constructor

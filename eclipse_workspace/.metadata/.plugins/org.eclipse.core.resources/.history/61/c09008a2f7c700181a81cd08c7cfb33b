@@ -79,7 +79,7 @@ public class Main {
 		}
 		o_fromOutput = out.output();
 
-
+		out.reWeight(y[0], o_fromOutput, o_fromInter);
 
 
 
