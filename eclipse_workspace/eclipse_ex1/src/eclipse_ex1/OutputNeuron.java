@@ -6,7 +6,7 @@ public class OutputNeuron {
 	//member field
 	double[] weight;
 	double threshoud;
-	double net = 0;
+	double net;
 	double eta;
 	double alpha;
 	double[] delta_W;
@@ -17,7 +17,7 @@ public class OutputNeuron {
 		return weight;
 	}
 	public void clearNet(){
-		net = 0;
+		net = 0.0;
 	}
 	public void setNet(double o_fromInter, int interNumber){
 		net += weight[interNumber] * o_fromInter;
@@ -26,16 +26,13 @@ public class OutputNeuron {
 		net += threshoud;
 	}
 	public double output(){
-		return sigmoid(net);
-	}
-	public static double sigmoid(double net) {
-		return 1/(1 + Math.exp((-1)*net));
+		return 1.0/(1.0 + Math.exp(-net));
 	}
 
-	public void reWeight(double y, double o_fromOutput, double o_fromInter[]){
+	public void reWeight(double y, double o_fromOutput, InterNeuron inter[]){
 		for(int i=0; i<weight.length; i++){
 			delta_W[i] *= alpha;
-			delta_W[i] += eta * (y - o_fromOutput) * o_fromOutput * (1 - o_fromOutput) * o_fromInter[i];
+			delta_W[i] += eta * (y - o_fromOutput) * o_fromOutput * (1 - o_fromOutput) * inter[i].output();
 			weight[i] += delta_W[i];	//重み更新式
 		}
 		delta_T *= alpha;
@@ -53,7 +50,7 @@ public class OutputNeuron {
 		eta = 0.5;
 		alpha = 0.9;
 		delta_W = new double[weight.length];
-		Arrays.fill(delta_W, 0);
-		delta_T = 0;
+		Arrays.fill(delta_W, 0.0);
+		delta_T = 0.0;
 	}
 }

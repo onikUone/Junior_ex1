@@ -6,6 +6,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Main {
@@ -44,12 +45,14 @@ public class Main {
 			inter[i].clearNet();
 		}
 		out.clearNet();
+
 		for(int i=0; i<inter.length; i++){
-			inter[i].setNet(x);
+			inter[i].setNet(x, 0);
 		}
 		for(int i=0; i<inter.length; i++){
 			inter[i].calcNet();
 		}
+		out.clearNet();
 		for(int i=0; i<inter.length; i++){
 			out.setNet(inter[i].output(), i);
 		}
@@ -63,25 +66,24 @@ public class Main {
 	public static void train(double x[], double y[], InterNeuron inter[], OutputNeuron out){
 		for(int i=0; i<x.length; i++){
 			//順方向計算
-			double o_fromOutput;	//計算量退避用
 			double o_fromInter[] = new double[inter.length];	//計算量退避用
 			//順方向1周
 			forward(x[i], inter, out, 0);
 			for(int j=0; j<inter.length; j++){
 				o_fromInter[j] = inter[j].output();
 			}
-			o_fromOutput = out.output();
-
 			//バックプロパゲーション
-			out.reWeight(y[i], o_fromOutput, o_fromInter);
+
 			for(int j=0; j<inter.length; j++){
-				inter[j].reWeight(x[i], y[i], o_fromInter[j], o_fromOutput, out);
+				inter[j].reWeight(x[i], y[i], inter[j].output(), out.output(), out, j);
 			}
+			out.reWeight(y[i], out.output(), inter);
 		}
 	}
 
 	public static void main(String[] args) throws IOException {
-		int trainCount = 1;	//学習回数
+		int trainCount = 30000;	//学習回数
+		int interNumber = 20;
 
 		//ファイル読み込み
 		double[][] inputFile;	//datファイル ２次元配列化
@@ -104,12 +106,13 @@ public class Main {
 		System.out.println("main");
 
 		//ニューロンオブジェクト
-		InterNeuron inter[] = new InterNeuron[20];	//中間層ニューロンの個数はここで指定する
+		InterNeuron inter[] = new InterNeuron[interNumber];	//中間層ニューロンの個数はここで指定する
 		for(int i=0; i<inter.length; i++){
 			inter[i] = new InterNeuron(1);
 		}
 		OutputNeuron out = new OutputNeuron(inter.length);	//inter.lengthで中間層ニューロンの個数指定し、その数だけ結合強度を用意する。
 
+		//学習
 		for(int i=0; i<trainCount; i++){	//ここで学習回数を指定できる
 			train(x, y, inter, out);
 		}
@@ -118,6 +121,8 @@ public class Main {
 		//学習関数出力
 		double[] test_X = new double[100+1];
 		double[] test_Y = new double[100+1];
+		Arrays.fill(test_X, 0.0);
+		Arrays.fill(test_Y, 0.0);
 		test_Y[0] = forward(test_X[0], inter, out, 0);
 		for(int i=1; i<test_X.length; i++){
 			test_X[i] = test_X[i-1] + 0.01;
