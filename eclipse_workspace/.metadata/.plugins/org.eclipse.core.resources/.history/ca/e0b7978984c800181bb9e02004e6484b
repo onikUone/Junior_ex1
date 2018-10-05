@@ -87,7 +87,7 @@ public class Main {
 
 		//BigDecimal test final
 
-		int trainCount = 1;	//学習回数
+		int trainCount = 30000;	//学習回数
 
 		//ファイル読み込み
 		BigDecimal[][] inputFile;	//datファイル ２次元配列化

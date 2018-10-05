@@ -55,7 +55,7 @@ public class InterNeuron {
 		eta = new BigDecimal("0.5");
 		alpha = new BigDecimal("0.9");
 		delta_W = new BigDecimal[weight.length];
-		Arrays.fill(delta_W, new BigDecimal("0.0"));
+		Arrays.fill(delta_W, 0);
 		delta_T = new BigDecimal("0.0");
 	}
 }
