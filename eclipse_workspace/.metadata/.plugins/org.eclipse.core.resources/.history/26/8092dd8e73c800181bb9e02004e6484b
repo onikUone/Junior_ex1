@@ -81,7 +81,7 @@ public class Main {
 	}
 
 	public static void main(String[] args) throws IOException {
-		int trainCount = 1;	//学習回数
+		int trainCount = 30000;	//学習回数
 
 		//ファイル読み込み
 		double[][] inputFile;	//datファイル ２次元配列化
@@ -97,7 +97,6 @@ public class Main {
 			y[i] = inputFile[i][1];
 		}
 		System.out.println("Train Data");
-		System.out.println(" x   y ");
 		for(int i=0; i<x.length; i++){
 			System.out.println(x[i] + " " + y[i]);
 		}
@@ -129,7 +128,7 @@ public class Main {
 		writeFile(writePath, test_X, test_Y);
 
 		//評価関数
-		double e = 0;
+		double e = 0.0;
 		for(int i=0; i< x.length; i++){
 			e += (y[i] - forward(x[i],inter,out,0)) * (y[i] - forward(x[i],inter,out,0)) / 2;
 		}
