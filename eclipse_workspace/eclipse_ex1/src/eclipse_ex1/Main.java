@@ -11,23 +11,24 @@ import java.util.List;
 
 public class Main {
 
+	//ファイル読み込みメソッド
 	public static double[][] readFile(String path) throws IOException{
 		List<String[]> list = new ArrayList<String[]>();
 		BufferedReader in = new BufferedReader(new FileReader(path));
 		String line;
 		while((line = in.readLine()) != null){
-//			System.out.println(line);	//一行ずつprintできる
 			list.add(line.split("\t"));
 		}
 		in.close();
-		double[][] x = new double[list.size()][list.get(0).length];
+		double[][] x_n2 = new double[list.size()][list.get(0).length];
 		for(int i=0; i<list.size(); i++){
-			x[i][0] = Double.parseDouble(list.get(i)[0]);
-			x[i][1] = Double.parseDouble(list.get(i)[1]);
+			x_n2[i][0] = Double.parseDouble(list.get(i)[0]);
+			x_n2[i][1] = Double.parseDouble(list.get(i)[1]);
 		}
-		return x;
+		return x_n2;
 	}
 
+	//ファイル書き込みメソッド
 	public static void writeFile(String path, double x[], double y[]) throws IOException{
 		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(path)));
 		for(int i=0; i<x.length; i++){
@@ -35,17 +36,15 @@ public class Main {
 			out.write("\t");
 			out.write(String.valueOf(y[i]));
 			out.write("\n");
-
 		}
 		out.close();
 	}
 
+	//順方向計算メソッド
 	public static double forward(double x, InterNeuron inter[], OutputNeuron out, int flg){	//flg 出力層の出力表示フラグ
 		for(int i=0; i<inter.length; i++){
 			inter[i].clearNet();
 		}
-		out.clearNet();
-
 		for(int i=0; i<inter.length; i++){
 			inter[i].setNet(x, 0);
 		}
@@ -64,26 +63,29 @@ public class Main {
 	}
 
 	public static void train(double x[], double y[], InterNeuron inter[], OutputNeuron out){
-		for(int i=0; i<x.length; i++){
+		for(int i=0; i<x.length; i++){	//学習一周につき、入力ベクトル全部計算するためのループ
 			//順方向計算
-			double o_fromInter[] = new double[inter.length];	//計算量退避用
-			//順方向1周
 			forward(x[i], inter, out, 0);
-			for(int j=0; j<inter.length; j++){
-				o_fromInter[j] = inter[j].output();
-			}
-			//バックプロパゲーション
 
+			//バックプロパゲーション
+			//中間層の重み更新
 			for(int j=0; j<inter.length; j++){
-				inter[j].reWeight(x[i], y[i], inter[j].output(), out.output(), out, j);
+				inter[j].reWeight(x[i], y[i], inter[j].output(), out, j);
 			}
+			//出力層の重み更新
 			out.reWeight(y[i], out.output(), inter);
 		}
 	}
 
 	public static void main(String[] args) throws IOException {
-		int trainCount = 30000;	//学習回数
-		int interNumber = 20;
+		//初期パラメータ
+		int trainCount = 30000;		//学習回数
+		int inputNumber = 1;	//入力層個数
+		int interNumber = 20;	//中間層個数
+		double preWeight = 0.5;	//結合強度初期値
+		double preThreshoud = 0.5; //しきい値初期値
+		double preEta = 0.5;	//学習係数初期値
+		double preAlpha = 0.9;	//慢性項係数初期値
 
 		//ファイル読み込み
 		double[][] inputFile;	//datファイル ２次元配列化
@@ -98,25 +100,26 @@ public class Main {
 			x[i] = inputFile[i][0];
 			y[i] = inputFile[i][1];
 		}
+		System.out.println("----------");
 		System.out.println("Train Data");
 		System.out.println(" x   y ");
 		for(int i=0; i<x.length; i++){
 			System.out.println(x[i] + " " + y[i]);
 		}
-		System.out.println("main");
+		System.out.println("----------");
 
-		//ニューロンオブジェクト
-		InterNeuron inter[] = new InterNeuron[interNumber];	//中間層ニューロンの個数はここで指定する
+		//ニューロン インスタンス作成
+		InterNeuron inter[] = new InterNeuron[interNumber];
 		for(int i=0; i<inter.length; i++){
-			inter[i] = new InterNeuron(1);
+			inter[i] = new InterNeuron(inputNumber, preWeight, preThreshoud, preEta, preAlpha);	//コンストラクタには前層の個数を指定 = weightの個数を決定する
 		}
-		OutputNeuron out = new OutputNeuron(inter.length);	//inter.lengthで中間層ニューロンの個数指定し、その数だけ結合強度を用意する。
+		OutputNeuron out = new OutputNeuron(interNumber, preWeight, preThreshoud, preEta, preAlpha);
 
-		//学習
-		for(int i=0; i<trainCount; i++){	//ここで学習回数を指定できる
+		//学習フェーズ
+		for(int i=0; i<trainCount; i++){
 			train(x, y, inter, out);
 		}
-		System.out.println("train finished.");
+		System.out.println("Training is Finished.");
 
 		//学習関数出力
 		double[] test_X = new double[100+1];
