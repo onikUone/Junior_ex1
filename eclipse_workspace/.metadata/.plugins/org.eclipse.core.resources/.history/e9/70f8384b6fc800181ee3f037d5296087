@@ -86,8 +86,6 @@ public class Main {
 	}
 
 	public static void main(String[] args) throws IOException {
-		int trainCount = 3000;
-
 		//ファイル読み込み
 		double[][] inputFile;	//datファイル ２次元配列化
 		String readPath = "/Users/Uone/IDrive/OPU/研究フォルダ/1_プログラミング課題/eclipse_workspace/eclipse_ex1/src/eclipse_ex1/inputData.dat";	//Mac(ノートPC)環境
@@ -110,7 +108,7 @@ public class Main {
 		}
 		OutputNeuron out = new OutputNeuron(inter.length);	//inter.lengthで中間層ニューロンの個数指定し、その数だけ結合強度を用意する。
 
-		for(int i=0; i<trainCount; i++){	//ここで学習回数を指定できる
+		for(int i=0; i< 1000; i++){	//ここで学習回数を指定できる
 			train(x, y, inter, out);
 		}
 		System.out.println("train finished.");

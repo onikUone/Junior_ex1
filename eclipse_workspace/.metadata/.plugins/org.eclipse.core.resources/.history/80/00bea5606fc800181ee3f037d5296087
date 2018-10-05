@@ -86,7 +86,7 @@ public class Main {
 	}
 
 	public static void main(String[] args) throws IOException {
-		int trainCount = 3000;
+		int trainCount = 2000;
 
 		//ファイル読み込み
 		double[][] inputFile;	//datファイル ２次元配列化
