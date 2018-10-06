@@ -82,15 +82,20 @@ public class Main {
 		int trainCount = 30000;		//学習回数
 		int inputNumber = 1;	//入力層個数
 		int interNumber = 20;	//中間層個数
-		double preWeight = 0.5;	//結合強度初期値
-		double preThreshoud = 0.5; //しきい値初期値
+//		double preWeight = Math.random();	//結合強度初期値
+//		double preThreshoud = Math.random(); //しきい値初期値
 		double preEta = 0.5;	//学習係数初期値
 		double preAlpha = 0.9;	//慢性項係数初期値
 
+		//ファイル読み込みPath
+//		String readPath = "/Users/Uone/IDrive/OPU/研究フォルダ/1_プログラミング課題/eclipse_workspace/eclipse_ex1/src/eclipse_ex1/inputData.dat";	//Mac(ノートPC)環境
+		String readPath = "C:\\Users\\Yuichi Omozaki\\IDrive\\Junior_ex1\\eclipse_workspace\\eclipse_ex1\\src\\eclipse_ex1/inputData.dat";	//Windows(研究室環境)
+		//ファイル書き込みPath
+//		String writePath = "/Users/Uone/IDrive/OPU/研究フォルダ/1_プログラミング課題/eclipse_workspace/eclipse_ex1/src/eclipse_ex1/outputData.dat";	//Mac(ノートPC)環境
+		String writePath = "C:\\Users\\Yuichi Omozaki\\IDrive\\Junior_ex1\\eclipse_workspace\\eclipse_ex1\\src\\eclipse_ex1/outputData.dat";	//Windows(研究室環境)
+
 		//ファイル読み込み
 		double[][] inputFile;	//datファイル ２次元配列化
-		String readPath = "/Users/Uone/IDrive/OPU/研究フォルダ/1_プログラミング課題/eclipse_workspace/eclipse_ex1/src/eclipse_ex1/inputData.dat";	//Mac(ノートPC)環境
-//		String readPath = "C:\\Users\\Yuichi Omozaki\\IDrive\\Junior_ex1\\eclipse_workspace\\eclipse_ex1\\src\\eclipse_ex1/inputData.dat";	//Windows(研究室環境)
 		inputFile = readFile(readPath);
 
 		//教師データ作成
@@ -111,9 +116,9 @@ public class Main {
 		//ニューロン インスタンス作成
 		InterNeuron inter[] = new InterNeuron[interNumber];
 		for(int i=0; i<inter.length; i++){
-			inter[i] = new InterNeuron(inputNumber, preWeight, preThreshoud, preEta, preAlpha);	//コンストラクタには前層の個数を指定 = weightの個数を決定する
+			inter[i] = new InterNeuron(inputNumber, Math.random(), Math.random(), preEta, preAlpha);	//コンストラクタには前層の個数を指定 = weightの個数を決定する
 		}
-		OutputNeuron out = new OutputNeuron(interNumber, preWeight, preThreshoud, preEta, preAlpha);
+		OutputNeuron out = new OutputNeuron(interNumber, Math.random(), Math.random(), preEta, preAlpha);
 
 		//学習フェーズ
 		for(int i=0; i<trainCount; i++){
@@ -133,7 +138,6 @@ public class Main {
 		}
 
 		//ファイル書き出し
-		String writePath = "/Users/Uone/IDrive/OPU/研究フォルダ/1_プログラミング課題/eclipse_workspace/eclipse_ex1/src/eclipse_ex1/outputData.dat";
 		writeFile(writePath, test_X, test_Y);
 
 		//評価関数
