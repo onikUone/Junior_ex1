@@ -5,7 +5,7 @@ import java.util.Arrays;
 public class Neuron {
 	//member field
 	protected double[] weight;
-	protected double threshoud;
+	double threshoud;
 	protected double net;
 	protected double eta;
 	protected double alpha;
